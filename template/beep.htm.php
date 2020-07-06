@@ -6,9 +6,8 @@
     $pollingInterval = $_G['cache']['plugin']['beep']['pollingInterval'];
 ?>
 
-<audio id="beep" src="https://raw.githubusercontent.com/DahisC/test/master/beep.mp3"></audio>
+<audio id="beepSound" src="https://raw.githubusercontent.com/DahisC/test/master/beep.mp3"></audio>
 <script>
-    const beepSound = document.getElementById("beep");
     setInterval(() => {
         const ajax = new XMLHttpRequest();
         ajax.responseType = "json";
@@ -17,8 +16,11 @@
 
         ajax.onreadystatechange = () => {
             if (ajax.response == 1) {
-                noticeTitle();
-                beepSound.play();
+                const beepSound = document.getElementById("beepSound");
+                const pm_ntc = document.getElementById("pm_ntc")
+                noticeTitle(); // 頁面標題閃爍
+                beepSound.play(); // 音效提示
+                pm_ntc.classList.add('new'); // 新消息圖示
             }
         }
     }, "<?php echo $pollingInterval * 1000; ?>")

@@ -3,7 +3,7 @@
         exit('Access Denied');
     }
 
-    $tpl = include 'beep.tpl.php';
+    $tpl = include '/template/beep.htm.php';
 
 class plugin_beep { 
 
