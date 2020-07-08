@@ -2,7 +2,7 @@
 <root>
 	<item id="Title"><![CDATA[Discuz! Plugin]]></item>
 	<item id="Version"><![CDATA[X3.4]]></item>
-	<item id="Time"><![CDATA[2020-07-08 12:01]]></item>
+	<item id="Time"><![CDATA[2020-07-08 12:02]]></item>
 	<item id="From"><![CDATA[Discuz! Board (http://localhost/bbs/)]]></item>
 	<item id="Data">
 		<item id="plugin">
@@ -35,7 +35,7 @@
 		<item id="var">
 			<item id="0">
 				<item id="displayorder"><![CDATA[0]]></item>
-				<item id="title"><![CDATA[輪詢間隔時間（秒） ...]]></item>
+				<item id="title"><![CDATA[輪詢間隔時間 (秒)]]></item>
 				<item id="description"><![CDATA[每位使用者向資料庫查詢是否有新訊息的間隔時間]]></item>
 				<item id="variable"><![CDATA[pollingInterval]]></item>
 				<item id="type"><![CDATA[number]]></item>
