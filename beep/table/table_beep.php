@@ -1,7 +1,5 @@
 <?php
 
-	// 測試中
-
 	if(!defined('IN_DISCUZ')) {
 		exit('Access Denied');
 	}

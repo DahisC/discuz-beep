@@ -1,5 +1,4 @@
 <div class="bbda pbm mbm" style="padding: 0 10px;">
-  $_G['username']
   <p>
     <strong>論壇嗶啵鼠可以透過音效以及標題閃爍效果即時提醒你有新訊息。</strong>
   </p>
@@ -18,19 +17,18 @@
 <div id="beep_form" class="beep_wrapper">
   <div class="beep_row">
     <div>
-      <p><strong>呼叫嗶啵鼠</strong></p>
+      <p><strong>嗶啵鼠提醒功能</strong></p>
       <p>啾</p>
     </div>
     <div>
-      <input name="beep_disabled" type="radio" value="1" />開啟<br />
-      <input name="beep_disabled" type="radio" value="0" checked />關閉
+      <input name="beep_disabled" type="radio" value="0" />開啟<br />
+      <input name="beep_disabled" type="radio" value="1" />關閉
     </div>
   </div>
   <!--  -->
   <div class="beep_row">
     <div>
       <p><strong>限制提醒次數</strong></p>
-      <p></p>
     </div>
     <div>
       <input name="beep_limited" type="radio" value="1" />限制<br />
@@ -41,7 +39,10 @@
   <div class="beep_row">
     <div>
       <p><strong>提醒次數上限</strong></p>
-      <p>在限制提醒次數的情況下，每則新訊息的提醒次數</p>
+      <p>
+        在限制提醒次數的情況下，每次停留於頁面時的提醒次數。
+      </p>
+      <p><small>※重新整理或轉換頁面時會重新計算。</small></p>
     </div>
     <div class="centered">
       <input name="beep_frequency" type="number" placeholder="0" value="3" />
@@ -74,12 +75,53 @@
 </div>
 
 <script>
+  beep_initSettings(); // 與資料庫連接，初始化設置選單
+
+  function beep_initSettings() {
+    // 嗶啵鼠提醒功能
+    const radioDisabled = document.querySelectorAll(
+      'input[name="beep_disabled"]'
+    );
+
+    radioDisabled.forEach((e) => {
+      '$beep_settings["disabled"]' == e.value
+        ? (e.checked = true)
+        : (e.checked = false);
+    });
+
+    // 限制提醒次數
+    const radioLimited = document.querySelectorAll(
+      'input[name="beep_limited"]'
+    );
+
+    radioLimited.forEach((e) => {
+      '$beep_settings["limited"]' == e.value
+        ? (e.checked = true)
+        : (e.checked = false);
+    });
+
+    // 提醒音效
+    const radioSound = document.querySelectorAll('input[name="beep_sound"]');
+
+    radioSound.forEach((e) => {
+      '$beep_settings["sound"]' == e.value
+        ? (e.checked = true)
+        : (e.checked = false);
+    });
+
+    // 提醒次數上限
+    const inputFrequency = document.querySelector(
+      'input[name="beep_frequency"]'
+    );
+    inputFrequency.value = $beep_settings["frequency"];
+  }
+
   function beep_playSound(e, soundName) {
     e.preventDefault();
     const sound_url =
-      'https://raw.githubusercontent.com/DahisC/test/master/' +
+      "https://raw.githubusercontent.com/DahisC/test/master/" +
       soundName +
-      '.mp3';
+      ".mp3";
     const beep_sound = new Audio(sound_url);
     beep_sound.play();
   }
@@ -105,9 +147,13 @@
     });
 
     const ajax = new XMLHttpRequest();
-    ajax.open('POST', 'plugin.php?id=beep:setting');
-    ajax.setRequestHeader('Content-Type', 'application/json');
+    ajax.open("POST", "plugin.php?id=beep:setting");
+    ajax.setRequestHeader("Content-Type", "application/json");
     ajax.send(payload);
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   }
 </script>
 
@@ -122,6 +168,7 @@
   .beep_row {
     display: flex;
     flex-direction: row;
+    margin: 10px 0px;
   }
 
   .beep_row > div:nth-child(1) {
@@ -138,11 +185,11 @@
     min-height: 50px;
   }
 
-  .beep_wrapper input[type='number'] {
+  .beep_wrapper input[type="number"] {
     width: 50%;
   }
 
-  .beep_wrapper input[type='radio'] {
+  .beep_wrapper input[type="radio"] {
     vertical-align: text-bottom;
   }
 
