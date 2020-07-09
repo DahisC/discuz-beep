@@ -5,6 +5,8 @@
 	<item id="Time"><![CDATA[2020-07-09 10:29]]></item>
 	<item id="From"><![CDATA[Discuz! Board (http://localhost/bbbs/)]]></item>
 	<item id="Data">
+		<item id="installfile"><![CDATA[install.php]]></item>
+		<item id="uninstallfile"><![CDATA[uninstall.php]]></item>
 		<item id="plugin">
 			<item id="available"><![CDATA[1]]></item>
 			<item id="adminid"><![CDATA[1]]></item>

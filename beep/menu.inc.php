@@ -14,10 +14,12 @@
     $limited = $payload['limited'];
     $frequency = $payload['frequency'];
 
-    // echo C::t('beep');
-    $user = C::t('common_member') -> fetch($_G['uid']);
+    $db = C::t('#beep#beep') -> fetch($_G['uid']);
 
-    print_r($user['email']);
-    echo (C::t('common_member'))
+    if (empty($db)) { // 如果使用者未設定，則新增欄位到資料表中
+        echo 1;
+    } else { // 如果已設定，則修改欄位
+        echo 2;
+    }
 
 ?>
