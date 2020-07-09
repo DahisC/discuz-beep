@@ -75,7 +75,9 @@
 </div>
 
 <script>
-  beep_initSettings(); // 與資料庫連接，初始化設置選單
+  if ("$beep_settings['uid']" !== "") {
+    beep_initSettings(); // 如果使用者已設定則與資料庫連接，初始化設置選單
+  }
 
   function beep_initSettings() {
     // 嗶啵鼠提醒功能
@@ -113,7 +115,7 @@
     const inputFrequency = document.querySelector(
       'input[name="beep_frequency"]'
     );
-    inputFrequency.value = $beep_settings["frequency"];
+    inputFrequency.value = '$beep_settings["frequency"]';
   }
 
   function beep_playSound(e, soundName) {

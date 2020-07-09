@@ -10,7 +10,7 @@
 ?>
 
 <script>
-    if (<?php echo $_G['uid'] ?> && <?php echo $beep_settings['disabled'] != 1 ?>) polling(); // 登入才開啟通知功能
+    if (<?php echo $_G['uid'] ?> && "<?php echo $beep_settings['disabled'] ?>" != 1) polling(); // 登入才開啟通知功能
 
     function polling() {
         let count = 1;
