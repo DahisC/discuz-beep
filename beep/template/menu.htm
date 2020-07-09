@@ -1,0 +1,159 @@
+<div class="bbda pbm mbm" style="padding: 0 10px;">
+  $_G['username']
+  <p>
+    <strong>論壇嗶啵鼠可以透過音效以及標題閃爍效果即時提醒你有新訊息。</strong>
+  </p>
+  <br />
+  <p>
+    此插件還在進行測試中，若有未臻完善之處或改進建議請至
+    <a href="http://www.bluecg.net/forum-46-1.html" target="_blank">
+      遊戲建議區
+    </a>
+    回報，謝謝！
+  </p>
+</div>
+
+<!-- <hr style="margin: 10px 0;" /> -->
+
+<div id="beep_form" class="beep_wrapper">
+  <div class="beep_row">
+    <div>
+      <p><strong>呼叫嗶啵鼠</strong></p>
+      <p>啾</p>
+    </div>
+    <div>
+      <input name="beep_disabled" type="radio" value="1" />開啟<br />
+      <input name="beep_disabled" type="radio" value="0" checked />關閉
+    </div>
+  </div>
+  <!--  -->
+  <div class="beep_row">
+    <div>
+      <p><strong>限制提醒次數</strong></p>
+      <p></p>
+    </div>
+    <div>
+      <input name="beep_limited" type="radio" value="1" />限制<br />
+      <input name="beep_limited" type="radio" value="0" checked />不限制
+    </div>
+  </div>
+  <!--  -->
+  <div class="beep_row">
+    <div>
+      <p><strong>提醒次數上限</strong></p>
+      <p>在限制提醒次數的情況下，每則新訊息的提醒次數</p>
+    </div>
+    <div class="centered">
+      <input name="beep_frequency" type="number" placeholder="0" value="3" />
+    </div>
+  </div>
+  <!--  -->
+  <div class="beep_row">
+    <div>
+      <p><strong>提醒音效</strong></p>
+      <p>按下 🎵 可以試聽音效</p>
+    </div>
+    <div>
+      <input name="beep_sound" type="radio" value="mailing" checked />
+      郵件抵達 <a href="#" onclick="beep_playSound(event, 'mailing')">🎵</a
+      ><br />
+      <input name="beep_sound" type="radio" value="stealing" />
+      偷竊成功 <a href="#" onclick="beep_playSound(event, 'stealing')">🎵</a
+      ><br />
+      <input name="beep_sound" type="radio" value="beep" />
+      補血魔法 <a href="#" onclick="beep_playSound(event, 'beep')">🎵</a><br />
+      <input name="beep_sound" type="radio" value="recovering" />
+      恢復魔法 <a href="#" onclick="beep_playSound(event, 'recovering')">🎵</a
+      ><br />
+    </div>
+  </div>
+  <!-- Submit -->
+  <button id="beep_submit" class="pn pnc" onclick="beep_submit()">
+    <strong>儲存設定</strong>
+  </button>
+</div>
+
+<script>
+  function beep_playSound(e, soundName) {
+    e.preventDefault();
+    const sound_url =
+      'https://raw.githubusercontent.com/DahisC/test/master/' +
+      soundName +
+      '.mp3';
+    const beep_sound = new Audio(sound_url);
+    beep_sound.play();
+  }
+
+  function beep_submit() {
+    const disabled = document.querySelector(
+      'input[name="beep_disabled"]:checked'
+    ).value;
+    const limited = document.querySelector('input[name="beep_limited"]:checked')
+      .value;
+    const frequency = document.querySelector('input[name="beep_frequency"]')
+      .value;
+    const sound = document.querySelector('input[name="beep_sound"]:checked')
+      .value;
+
+    //
+
+    const payload = JSON.stringify({
+      disabled,
+      limited,
+      frequency,
+      sound,
+    });
+
+    const ajax = new XMLHttpRequest();
+    ajax.open('POST', 'plugin.php?id=beep:setting');
+    ajax.setRequestHeader('Content-Type', 'application/json');
+    ajax.send(payload);
+  }
+</script>
+
+<style>
+  .beep_wrapper {
+    display: flex;
+    flex-direction: column;
+    font-size: 1em;
+    font-family: Microsoft JhengHei;
+  }
+
+  .beep_row {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .beep_row > div:nth-child(1) {
+    min-width: 150px;
+    max-width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: top;
+  }
+
+  .beep_wrapper div {
+    padding: 5px;
+    min-height: 50px;
+  }
+
+  .beep_wrapper input[type='number'] {
+    width: 50%;
+  }
+
+  .beep_wrapper input[type='radio'] {
+    vertical-align: text-bottom;
+  }
+
+  .beep_wrapper .centered {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+  }
+
+  .beep_wrapper button#beep_submit {
+    width: fit-content;
+    margin-left: 10px;
+  }
+</style>
